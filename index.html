@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تصريح خروج - أ. جملاء</title>
+  <style>
+    body {
+      background: #f9f5e9;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      font-size: 24px;
+      color: #7a5901;
+    }
+    .form-box, .result-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      max-width: 400px;
+    }
+    input, select, button {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background: linear-gradient(to right, #d4af37, #f9dc5c);
+      color: #000;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>مدارس التربية النموذجية - الريان (بنات)</h1>
+
+  <div class="form-box" id="formBox">
+    <h2>تسجيل خروج مؤقت</h2>
+    <input type="text" id="studentName" placeholder="اسم الطالبة" required>
+    <select id="movementType">
+      <option value="خروج مؤقت">خروج مؤقت</option>
+      <option value="أمر إداري">أمر إداري</option>
+    </select>
+    <button onclick="sendForm()">إرسال</button>
+  </div>
+
+  <div class="result-box hidden" id="resultBox">
+    <h2>تصريح خروج</h2>
+    <p><strong>اسم الطالبة:</strong> <span id="rStudentName"></span></p>
+    <p><strong>نوع الحركة:</strong> <span id="rMovementType"></span></p>
+    <p><strong>المعلمة:</strong> أ. شيخة</p>
+    <p><strong>المادة:</strong> اتقان لفظي</p>
+    <p><strong>الغرض:</strong> الخروج المؤقت</p>
+    <p><strong>وقت الخروج:</strong> <span id="startTime"></span></p>
+    <p><strong>مدة الغياب:</strong> <span id="duration">—</span></p>
+    <button onclick="returnStudent()">رجوع</button>
+  </div>
+
+  <script>
+    let startTimestamp = null;
+
+    function sendForm() {
+      const name = document.getElementById("studentName").value.trim();
+      const type = document.getElementById("movementType").value;
+
+      if (!name) {
+        alert("رجاءً أدخلي اسم الطالبة");
+        return;
+      }
+
+      document.getElementById("rStudentName").textContent = name;
+      document.getElementById("rMovementType").textContent = type;
+
+      const now = new Date();
+      startTimestamp = now;
+      document.getElementById("startTime").textContent = now.toLocaleTimeString();
+
+      document.getElementById("formBox").classList.add("hidden");
+      document.getElementById("resultBox").classList.remove("hidden");
+    }
+
+    function returnStudent() {
+      if (!startTimestamp) return;
+
+      const end = new Date();
+      const diffMs = end - startTimestamp;
+      const mins = Math.floor(diffMs / 60000);
+      const secs = Math.floor((diffMs % 60000) / 1000);
+
+      document.getElementById("duration").textContent = `${mins} دقيقة و ${secs} ثانية`;
+
+      // ممكن تضيفي إرسال البيانات هنا لو تبين
+    }
+  </script>
+
+</body>
+</html>
