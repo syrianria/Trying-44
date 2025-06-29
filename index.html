@@ -1,112 +1,227 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تصريح خروج - أ. جملاء</title>
+  <meta charset="UTF-8" />
+  <title>تصريح خروج مؤقت - مدارس التربية النموذجية - الريان (بنات)</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
     body {
-      background: #f9f5e9;
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      padding: 20px;
-      color: #333;
-    }
-    h1 {
-      font-size: 24px;
-      color: #7a5901;
-    }
-    .form-box, .result-box {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin: 20px auto;
-      max-width: 400px;
-    }
-    input, select, button {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    button {
-      background: linear-gradient(to right, #d4af37, #f9dc5c);
+      background: #fff9e6;
+      font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 40px 20px;
       color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(218, 165, 32, 0.4);
+      width: 350px;
+      padding: 30px 25px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #d4af37;
+      margin-bottom: 25px;
+      font-weight: 900;
+      font-size: 22px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px 0;
+      font-weight: 700;
+      font-size: 17px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #d4af37;
+      border-radius: 8px;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #b8860b;
+    }
+
+    .movement-type {
+      margin: 15px 0;
+      font-weight: 700;
+      font-size: 18px;
+      color: #000;
+    }
+
+    button {
+      width: 100%;
+      background-color: #d4af37;
       border: none;
+      padding: 12px 0;
+      font-weight: 800;
+      font-size: 18px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s;
+      color: #fff;
+      margin-top: 25px;
+      box-shadow: 0 4px 8px rgba(212, 175, 55, 0.6);
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      opacity: 0.9;
+      background-color: #b8860b;
     }
-    .hidden {
+
+    .card {
+      margin-top: 30px;
+      background: #fffbe6;
+      border: 2px solid #d4af37;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
       display: none;
+    }
+
+    .card h2 {
+      color: #b8860b;
+      font-weight: 900;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    .card p {
+      font-size: 16px;
+      margin: 8px 0;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .timer {
+      font-size: 18px;
+      margin-top: 15px;
+      font-weight: 700;
+      color: #7a6600;
+    }
+
+    .final-time {
+      margin-top: 20px;
+      font-weight: 900;
+      font-size: 18px;
+      color: #b8860b;
+    }
+
+    #smsBtn {
+      display: none;
+      margin-top: 15px;
+      background-color: #b8860b;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
     }
   </style>
 </head>
 <body>
 
-  <h1>مدارس التربية النموذجية - الريان (بنات)</h1>
+  <div class="container">
 
-  <div class="form-box" id="formBox">
-    <h2>تسجيل خروج مؤقت</h2>
-    <input type="text" id="studentName" placeholder="اسم الطالبة" required>
-    <select id="movementType">
-      <option value="خروج مؤقت">خروج مؤقت</option>
-      <option value="أمر إداري">أمر إداري</option>
-    </select>
-    <button onclick="sendForm()">إرسال</button>
+    <h1>مدارس التربية النموذجية - الريان (بنات)</h1>
+
+    <label for="studentName">اسم الطالبة</label>
+    <input type="text" id="studentName" placeholder="أدخل اسم الطالبة" required />
+
+    <div class="movement-type">خروج مؤقت</div>
+
+    <button id="startBtn">تسجيل خروج مؤقت</button>
+
+    <div class="card" id="exitCard">
+      <h2>تم تسجيل الخروج بنجاح ✅</h2>
+      <p><strong>الاسم:</strong> <span id="nameDisplay"></span></p>
+      <p><strong>نوع الحركة:</strong> خروج مؤقت</p>
+      <p><strong>المعلمة:</strong> أ/ شيخة</p>
+      <p><strong>المادة:</strong> كفايات لفظي</p>
+      <div class="timer">
+        مدة الغياب: <span id="timer">0 دقيقة 0 ثانية</span>
+      </div>
+      <button id="returnBtn">رجوع</button>
+      <div class="final-time" id="finalTime"></div>
+
+      <!-- زر تنبيه برسالة -->
+      <a id="smsBtn" href="#" target="_blank">📩 إرسال تنبيه للمعلمة</a>
+    </div>
+
   </div>
 
-  <div class="result-box hidden" id="resultBox">
-    <h2>تصريح خروج</h2>
-    <p><strong>اسم الطالبة:</strong> <span id="rStudentName"></span></p>
-    <p><strong>نوع الحركة:</strong> <span id="rMovementType"></span></p>
-    <p><strong>المعلمة:</strong> أ. شيخة</p>
-    <p><strong>المادة:</strong> اتقان لفظي</p>
-    <p><strong>الغرض:</strong> الخروج المؤقت</p>
-    <p><strong>وقت الخروج:</strong> <span id="startTime"></span></p>
-    <p><strong>مدة الغياب:</strong> <span id="duration">—</span></p>
-    <button onclick="returnStudent()">رجوع</button>
-  </div>
+<script>
+  const startBtn = document.getElementById('startBtn');
+  const returnBtn = document.getElementById('returnBtn');
+  const exitCard = document.getElementById('exitCard');
+  const nameInput = document.getElementById('studentName');
+  const nameDisplay = document.getElementById('nameDisplay');
+  const timerDisplay = document.getElementById('timer');
+  const finalTimeDisplay = document.getElementById('finalTime');
+  const smsBtn = document.getElementById('smsBtn');
 
-  <script>
-    let startTimestamp = null;
+  let startTime;
+  let timerInterval;
 
-    function sendForm() {
-      const name = document.getElementById("studentName").value.trim();
-      const type = document.getElementById("movementType").value;
+  startBtn.addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    if (!name) {
+      alert('من فضلك أدخلي اسم الطالبة');
+      return;
+    }
 
-      if (!name) {
-        alert("رجاءً أدخلي اسم الطالبة");
-        return;
-      }
+    nameDisplay.textContent = name;
+    exitCard.style.display = 'block';
 
-      document.getElementById("rStudentName").textContent = name;
-      document.getElementById("rMovementType").textContent = type;
+    // إخفاء الحقول
+    nameInput.style.display = 'none';
+    startBtn.style.display = 'none';
 
+    // بداية التوقيت
+    startTime = new Date();
+    timerInterval = setInterval(() => {
       const now = new Date();
-      startTimestamp = now;
-      document.getElementById("startTime").textContent = now.toLocaleTimeString();
+      const diff = Math.floor((now - startTime) / 1000);
+      const minutes = Math.floor(diff / 60);
+      const seconds = diff % 60;
+      timerDisplay.textContent = `${minutes} دقيقة ${seconds} ثانية`;
+    }, 1000);
+  });
 
-      document.getElementById("formBox").classList.add("hidden");
-      document.getElementById("resultBox").classList.remove("hidden");
+  returnBtn.addEventListener('click', () => {
+    clearInterval(timerInterval);
+    const now = new Date();
+    const diff = Math.floor((now - startTime) / 1000);
+    const minutes = Math.floor(diff / 60);
+    const seconds = diff % 60;
+    finalTimeDisplay.textContent = `مدة الغياب كانت: ${minutes} دقيقة و ${seconds} ثانية`;
+
+    // إذا تأخرت دقيقة أو أكثر، يفتح رابط تنبيه برسالة
+    if (minutes >= 1) {
+      const name = nameInput.value.trim();
+      const message = encodeURIComponent(`تنبيه: الطالبة [${name}] تأخرت عن العودة من الخروج المؤقت`);
+      const phoneNumber = "+966555861594";
+      smsBtn.href = `sms:${phoneNumber}?body=${message}`;
+      smsBtn.style.display = 'inline-block';
     }
 
-    function returnStudent() {
-      if (!startTimestamp) return;
-
-      const end = new Date();
-      const diffMs = end - startTimestamp;
-      const mins = Math.floor(diffMs / 60000);
-      const secs = Math.floor((diffMs % 60000) / 1000);
-
-      document.getElementById("duration").textContent = `${mins} دقيقة و ${secs} ثانية`;
-
-      // ممكن تضيفي إرسال البيانات هنا لو تبين
-    }
-  </script>
+    returnBtn.disabled = true;
+  });
+</script>
 
 </body>
 </html>
